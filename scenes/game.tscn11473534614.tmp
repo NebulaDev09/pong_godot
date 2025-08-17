@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://cf3wyjqgvk532"]
+
+[ext_resource type="Script" uid="uid://djryvpj06ql4" path="res://scripts/ball.gd" id="1_lnu2h"]
+[ext_resource type="Script" uid="uid://bp14lx0uwiq1c" path="res://scripts/paddle_1.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://dq6icrcficado" path="res://scripts/paddle_2.gd" id="2_yqjtg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8cj0n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrxv"]
+size = Vector2(20, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
+size = Vector2(1152, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(20, 648)
+
+[node name="game" type="Node2D"]
+
+[node name="ball" type="CharacterBody2D" parent="."]
+position = Vector2(576, 324)
+collision_mask = 3
+script = ExtResource("1_lnu2h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ball"]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_8cj0n")
+
+[node name="ColorRect" type="ColorRect" parent="ball"]
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="paddle1" type="StaticBody2D" parent="."]
+position = Vector2(20, 324)
+collision_mask = 3
+script = ExtResource("1_uwrxv")
+
+[node name="ColorRect" type="ColorRect" parent="paddle1"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="paddle1"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_uwrxv")
+
+[node name="paddle2" type="StaticBody2D" parent="."]
+position = Vector2(1112, 324)
+collision_mask = 3
+script = ExtResource("2_yqjtg")
+
+[node name="ColorRect" type="ColorRect" parent="paddle2"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="paddle2"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_uwrxv")
+
+[node name="borders" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="borders"]
+position = Vector2(576, -10)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="borders"]
+position = Vector2(576, 658)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[node name="scoreRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="scoreRight"]
+position = Vector2(1162, 324)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="scoreLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="scoreLeft"]
+position = Vector2(-10, 324)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="scoreRight" to="ball" method="_on_score_right_body_entered"]
+[connection signal="timeout" from="Timer" to="ball" method="_on_timer_timeout"]
