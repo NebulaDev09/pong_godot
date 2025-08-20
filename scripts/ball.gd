@@ -7,6 +7,11 @@ var accelaration = 50
 var dir : Vector2
 var score = [0, 0]
 
+const hit = preload("res://assets/hit.mp3")
+const score_sound = preload("res://assets/score.mp3")
+
+var player_2
+
 func _ready() -> void:
 	win_size = get_viewport_rect().size
 	speed = start_speed
@@ -16,6 +21,8 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider == $"../paddle1" or collider == $"../paddle2":
+			$AudioStreamPlayer2D.stream = hit
+			$AudioStreamPlayer2D.play()
 			speed += accelaration
 			dir = new_direction(collider)
 		else:
@@ -23,9 +30,9 @@ func _physics_process(delta: float) -> void:
 			
 func check_winner():
 	if score[1] == 1:
-		get_tree().change_scene_to_file("res://scenes/winner2.tscn")
+		$"../paddle2".change_scene('Player 1')
 	elif score[0] == 1:
-		get_tree().change_scene_to_file("res://scenes/winner1.tscn")
+		$"../paddle2".change_scene(player_2)
 
 func newBall():
 	speed = start_speed
@@ -55,12 +62,16 @@ func new_direction(collider):
 
 func _on_score_left_body_entered(body: Node2D) -> void:
 	score[1] += 1
+	$AudioStreamPlayer2D.stream = score_sound
+	$AudioStreamPlayer2D.play()
 	check_winner()
 	$"../scores/left".text = str(score[1])
 	$"../Timer".start()
 
 
 func _on_score_right_body_entered(body: Node2D) -> void:
+	$AudioStreamPlayer2D.stream = score_sound
+	$AudioStreamPlayer2D.play()
 	score[0] += 1
 	check_winner()
 	$"../scores/right".text = str(score[0])

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b17e6yge0fwvw"]
+[gd_scene load_steps=4 format=3 uid="uid://b17e6yge0fwvw"]
 
 [ext_resource type="FontFile" uid="uid://df68awn28600l" path="res://assets/ARCADECLASSIC.TTF" id="1_nt7q6"]
-[ext_resource type="Script" uid="uid://cqxsanfqjtu3r" path="res://scripts/button.gd" id="2_x4jx1"]
+[ext_resource type="Script" uid="uid://usksogr5wsp1" path="res://scripts/singleplayer.gd" id="2_yev5y"]
+[ext_resource type="Script" uid="uid://dkaalmpkrfaaw" path="res://scripts/multiplayer.gd" id="3_gdt2y"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,16 +14,28 @@ grow_vertical = 2
 
 [node name="singleplayer" type="Button" parent="."]
 layout_mode = 0
-offset_left = 246.0
-offset_top = 237.0
-offset_right = 914.0
-offset_bottom = 373.0
+offset_left = 247.0
+offset_top = 145.0
+offset_right = 915.0
+offset_bottom = 281.0
 theme_override_fonts/font = ExtResource("1_nt7q6")
 theme_override_font_sizes/font_size = 100
 toggle_mode = true
 action_mode = 0
 text = "SinglePLayer
 "
-script = ExtResource("2_x4jx1")
+script = ExtResource("2_yev5y")
 
-[connection signal="pressed" from="singleplayer" to="singleplayer" method="_on_pressed"]
+[node name="multiplayer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 311.0
+offset_right = 912.0
+offset_bottom = 447.0
+theme_override_fonts/font = ExtResource("1_nt7q6")
+theme_override_font_sizes/font_size = 100
+toggle_mode = true
+action_mode = 0
+text = "MultipLayer
+"
+script = ExtResource("3_gdt2y")
